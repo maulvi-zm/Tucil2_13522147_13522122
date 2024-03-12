@@ -44,7 +44,7 @@ export const PointProvider = ({ children }: { children: React.ReactNode }) => {
   // State for n points
   const [nPoint, setNPoint] = useState<Point[]>([]);
   // State for result points
-  const [resultPoint, setResultPoint] = useState<Point[][]>([[]]);
+  const [resultPoint, setResultPoint] = useState<Point[][]>([[{ x: 0, y: 0 }]]);
   // State for iteration
   const [iteration, setIteration] = useState<number>(0);
 

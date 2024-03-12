@@ -103,11 +103,11 @@ function ThreeInput() {
       <div className='space-y-1'>
         <Label htmlFor='name'>Iterasi</Label>
         <Input
-          id='name'
-          defaultValue='0'
+          id='iteration'
           type='number'
           onChange={(e) => {
-            setIteration(parseInt(e.target.value));
+            setIteration(parseInt(e.target.value ? e.target.value : "0"));
+            console.log(e.target.value);
           }}
         />
       </div>

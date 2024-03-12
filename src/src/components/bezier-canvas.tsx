@@ -1,8 +1,9 @@
 import { useEffect, useRef } from "react";
-import { pointsData } from "@/utils/point";
+import { usePointContext } from "@/hooks/usePointContext";
 
 function BezierCurve() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const { resultPoint, iteration } = usePointContext();
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -10,6 +11,11 @@ function BezierCurve() {
     if (!canvas) {
       return;
     }
+
+    if (resultPoint.length === 0 || iteration === 0) {
+      return;
+    }
+
     const screenWidth = window.innerWidth / 2 - 50;
     const screenHeight = screenWidth;
 
@@ -24,7 +30,8 @@ function BezierCurve() {
     }
 
     // Your code to calculate Bezier points using pointsData
-    const bezierPoints = pointsData;
+    const bezierPoints = resultPoint[iteration - 1];
+    console.log(bezierPoints);
 
     // Draw points on canvas
     ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -34,19 +41,19 @@ function BezierCurve() {
 
     // Draw lines between consecutive points
     ctx.beginPath();
-    ctx.moveTo(bezierPoints[0].x, bezierPoints[0].y);
+    ctx.moveTo(bezierPoints[0].x * 50, bezierPoints[0].y * 50);
     for (let i = 1; i < bezierPoints.length; i++) {
-      ctx.lineTo(bezierPoints[i].x, bezierPoints[i].y);
+      ctx.lineTo(bezierPoints[i].x * 50, bezierPoints[i].y * 50);
     }
     ctx.stroke();
 
     // Draw circles at each point
     bezierPoints.forEach((point) => {
       ctx.beginPath();
-      ctx.arc(point.x, point.y, 5, 0, Math.PI * 2);
+      ctx.arc(point.x * 50, point.y * 50, 5, 0, Math.PI * 2);
       ctx.fill();
     });
-  }, []);
+  }, [resultPoint]);
 
   return (
     <div>

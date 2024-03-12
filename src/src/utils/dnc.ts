@@ -1,8 +1,8 @@
-import { Point } from "./point";
+import { Point } from "@/utils/point";
 
-export function bezierCurve(points: Point[], t: number): Point[] {
+function bezierCurves(points: Point[], t: number): Point {
   if (points.length === 1) {
-    return points; // Return an array of points
+    return points[0];
   }
 
   let newPoints: Point[] = [];
@@ -11,17 +11,27 @@ export function bezierCurve(points: Point[], t: number): Point[] {
       x: (1 - t) * points[i].x + t * points[i + 1].x,
       y: (1 - t) * points[i].y + t * points[i + 1].y,
     };
+
     newPoints.push(midPoint);
   }
 
-  return bezierCurve(newPoints, t);
+  // Recursive call
+  return bezierCurves(newPoints, t);
 }
 
-export function makeCurvePoint(points: Point[], res: number): Point[][] {
-  const curvePoints: Point[][] = [];
-  for (let i = 0; i < res; i++) {
-    let t: number[] = Array.from({ length: i * 2 + 1 }, (_, j) => j / (i * 2));
-    curvePoints[i].push(t.map((ti) => bezierCurve(points, ti)));
+export function bezierCurveAll(points: Point[], resolution: number): Point[][] {
+  let curvePointsAll: Point[][] = [];
+
+  for (let i = 0; i < resolution; i++) {
+    const t: number[] = Array.from(
+      { length: i * 2 + 1 },
+      (_, j) => j / (i * 2)
+    );
+
+    const curvePoints = t.map((ti) => bezierCurves(points, ti));
+
+    curvePointsAll.push(curvePoints);
   }
-  return curvePoints;
+
+  return curvePointsAll;
 }
