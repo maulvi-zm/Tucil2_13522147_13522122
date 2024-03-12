@@ -22,6 +22,15 @@ function bezierCurve(points, resolution) {
     return curvePoints;
 }
 
+function bezierCurveAll(points, resolution) {
+    let curvePointsAll = [];
+    for (let i = 0; i < resolution; i++) {
+        curvePointsAll.push(bezierCurve(points, i * 2 + 1));
+    }
+
+    return curvePointsAll;
+}
+
 let x0 = 1;
 let y0 = 1;
 let x1 = 4;
@@ -32,9 +41,4 @@ let res = 5;
 
 let points = [[x0, y0], [x1, y1], [x2, y2]];
 
-let curvePoints = [];
-for (let i = 0; i < res; i++) {
-    curvePoints.push(bezierCurve(points, i * 2 + 1));
-}
-
-console.log(curvePoints);
+let curvePointsAll = bezierCurveAll(points, res);
