@@ -26,11 +26,6 @@ res = 5
 
 points = np.array([[x0, y0], [x1, y1], [x2, y2]])
 
-curve_points = bezier_curve(points, res*2 + 1)
-
-plt.figure()
-plt.plot(curve_points[:,0], curve_points[:,1], label='Bézier Curve', color='green')
-plt.scatter(points[:,0], points[:,1], label='Control Points', color='red')
-plt.legend()
-plt.gca().set_aspect('equal', adjustable='box')
-plt.show()
+curve_points = []
+for i in range(res):
+    curve_points.append(bezier_curve(points, i*2 + 1))
