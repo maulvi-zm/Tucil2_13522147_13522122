@@ -10,6 +10,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import ThreeInput from "./three-input";
 
 export function InputTabs() {
   return (
@@ -27,68 +28,7 @@ export function InputTabs() {
             </CardDescription>
           </CardHeader>
           <CardContent className='space-y-2'>
-            <div className='space-y-1'>
-              <Label htmlFor='name'>Point 1</Label>
-              <div className='flex space-x-2 items-center'>
-                <span>x : </span>
-                <Input
-                  id='name'
-                  defaultValue='0'
-                  type='number'
-                  className='w-[20%]'
-                />
-                <span>y : </span>
-                <Input
-                  id='name'
-                  defaultValue='0'
-                  type='number'
-                  className='w-[20%]'
-                />
-              </div>
-            </div>
-            <div className='space-y-1'>
-              <Label htmlFor='name'>Point 2</Label>
-              <div className='flex space-x-2 items-center'>
-                <span>x : </span>
-                <Input
-                  id='name'
-                  defaultValue='0'
-                  type='number'
-                  className='w-[20%]'
-                />
-                <span>y : </span>
-                <Input
-                  id='name'
-                  defaultValue='0'
-                  type='number'
-                  className='w-[20%]'
-                />
-              </div>
-            </div>
-            <div className='space-y-1'>
-              <Label htmlFor='name'>Point 3</Label>
-              <div className='flex space-x-2 items-center'>
-                <span>x : </span>
-                <Input
-                  id='name'
-                  defaultValue='0'
-                  type='number'
-                  className='w-[20%]'
-                />
-                <span>y : </span>
-                <Input
-                  id='name'
-                  defaultValue='0'
-                  type='number'
-                  className='w-[20%]'
-                />
-              </div>
-            </div>
-
-            <div className='space-y-1'>
-              <Label htmlFor='name'>Iterasi</Label>
-              <Input id='name' defaultValue='0' type='number' />
-            </div>
+            <ThreeInput />
           </CardContent>
           <CardFooter>
             <Button>Submit</Button>

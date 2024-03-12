@@ -1,7 +1,8 @@
 import BezierCurve from "./components/bezier-canvas";
 import Header from "./components/header";
 import { InputTabs } from "./components/input-tabs";
-import { useWindowSize } from "./utils/useWindowSize";
+import { useWindowSize } from "./hooks/useWindowSize";
+import { PointProvider } from "./hooks/usePointContext";
 
 function App() {
   const windowSize = useWindowSize();
@@ -11,15 +12,18 @@ function App() {
   return (
     <>
       <Header />
-      <div className={`flex justify-around h-[${windowSize.height - 64}px]`}>
-        <div className={`p-10 self-center`}>
-          <BezierCurve />
-        </div>
 
-        <div className='self-center'>
-          <InputTabs />
+      <PointProvider>
+        <div className={`flex justify-around h-[${windowSize.height - 64}px]`}>
+          <div className={`p-10 self-center`}>
+            <BezierCurve />
+          </div>
+
+          <div className='self-center'>
+            <InputTabs />
+          </div>
         </div>
-      </div>
+      </PointProvider>
     </>
   );
 }

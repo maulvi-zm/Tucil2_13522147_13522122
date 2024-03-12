@@ -11,3 +11,6 @@ export const pointsData: Point[] = [
   { x: 200, y: 200 },
   // Add more points as needed
 ];
+export interface BezierResult {
+  matrix: Point[][];
+}
