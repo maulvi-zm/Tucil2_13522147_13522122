@@ -1,63 +1,79 @@
 import { useEffect, useRef } from "react";
 import { usePointContext } from "@/hooks/usePointContext";
+import Chart from "chart.js/auto";
 
 function BezierCurve() {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-  const { resultPoint, iteration } = usePointContext();
+  const chartRef = useRef<HTMLCanvasElement>(null);
+  const chartData = useRef<Chart<
+    "scatter",
+    { x: number; y: number }[],
+    string
+  > | null>(null);
+  const { resultPoint, iteration, showedIteration } = usePointContext();
+  const screenWidth = window.innerWidth / 2 - 50;
+  const screenHeight = screenWidth - 50;
 
   useEffect(() => {
-    const canvas = canvasRef.current;
-
-    if (!canvas) {
+    if (
+      !chartRef.current ||
+      !resultPoint.length ||
+      !iteration ||
+      !showedIteration
+    ) {
       return;
     }
 
-    if (resultPoint.length === 0 || iteration === 0) {
-      return;
+    chartRef.current.width = screenWidth;
+    chartRef.current.height = screenHeight;
+
+    const bezierPoints = resultPoint[showedIteration - 1];
+
+    const data = {
+      datasets: [
+        {
+          labels: "Bezier Curve",
+          data: bezierPoints.map((point) => ({ x: point.x, y: point.y })),
+          borderColor: "rgba(255, 99, 132, 1)",
+          backgroundColor: "rgba(255, 99, 132, 1)",
+          pointRadius: 5,
+          pointHoverRadius: 8,
+          pointStyle: "circle",
+          showLine: true,
+        },
+      ],
+    };
+
+    if (chartData.current) {
+      chartData.current.data = data;
+      chartData.current.update();
+    } else {
+      chartData.current = new Chart(chartRef.current, {
+        type: "scatter",
+        data,
+        options: {
+          animation: false,
+          scales: {
+            x: {
+              type: "linear",
+              position: "bottom",
+            },
+            y: {
+              type: "linear",
+              position: "left",
+            },
+          },
+        },
+      });
     }
-
-    const screenWidth = window.innerWidth / 2 - 50;
-    const screenHeight = screenWidth;
-
-    // Set canvas width and height
-    canvas.width = screenWidth;
-    canvas.height = screenHeight;
-
-    const ctx = canvas.getContext("2d");
-
-    if (!ctx) {
-      return;
-    }
-
-    // Your code to calculate Bezier points using pointsData
-    const bezierPoints = resultPoint[iteration - 1];
-    console.log(bezierPoints);
-
-    // Draw points on canvas
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    ctx.fillStyle = "red";
-    ctx.strokeStyle = "white";
-    ctx.lineWidth = 2;
-
-    // Draw lines between consecutive points
-    ctx.beginPath();
-    ctx.moveTo(bezierPoints[0].x * 50, bezierPoints[0].y * 50);
-    for (let i = 1; i < bezierPoints.length; i++) {
-      ctx.lineTo(bezierPoints[i].x * 50, bezierPoints[i].y * 50);
-    }
-    ctx.stroke();
-
-    // Draw circles at each point
-    bezierPoints.forEach((point) => {
-      ctx.beginPath();
-      ctx.arc(point.x * 50, point.y * 50, 5, 0, Math.PI * 2);
-      ctx.fill();
-    });
-  }, [resultPoint]);
+  }, [resultPoint, showedIteration]);
 
   return (
-    <div>
-      <canvas ref={canvasRef} className='bg-black rounded-lg'></canvas>
+    <div className={`p-4 bg-black rounded-lg`}>
+      <canvas
+        ref={chartRef}
+        className={`bg-black rounded-lg`}
+        style={{ height: screenHeight, width: screenWidth }}
+      ></canvas>
     </div>
   );
 }

@@ -16,6 +16,9 @@ interface PointContextType {
   setResultPoint: Dispatch<SetStateAction<Point[][]>>;
   iteration: number;
   setIteration: Dispatch<SetStateAction<number>>;
+  showedIteration: number;
+  setShowedIteration: Dispatch<SetStateAction<number>>;
+  setNPoint: Dispatch<SetStateAction<Point[]>>;
 }
 
 // Create the context
@@ -24,10 +27,13 @@ const PointContext = createContext<PointContextType>({
   setThreePointAtIndex: () => {},
   nPoint: [],
   setNPointAtIndex: () => {},
+  setNPoint: () => {},
   resultPoint: [[]],
   setResultPoint: () => {},
   iteration: 0,
   setIteration: () => {},
+  showedIteration: 0,
+  setShowedIteration: () => {},
 });
 
 // Custom hook to consume the context
@@ -47,6 +53,8 @@ export const PointProvider = ({ children }: { children: React.ReactNode }) => {
   const [resultPoint, setResultPoint] = useState<Point[][]>([[{ x: 0, y: 0 }]]);
   // State for iteration
   const [iteration, setIteration] = useState<number>(0);
+  // State for showed iteration
+  const [showedIteration, setShowedIteration] = useState<number>(0);
 
   // Function to set a point in the threePoint array at a specific index
   const setThreePointAtIndex = (index: number, point: Point) => {
@@ -82,6 +90,9 @@ export const PointProvider = ({ children }: { children: React.ReactNode }) => {
     setResultPoint,
     iteration,
     setIteration,
+    showedIteration,
+    setShowedIteration,
+    setNPoint: setNPoint,
   };
 
   return (
