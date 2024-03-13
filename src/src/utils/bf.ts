@@ -1,5 +1,10 @@
 import { Point } from "@/utils/point";
 
+// export interface Point {
+//   x: number;
+//   y: number;
+// }
+
 function factorial(n: number): number {
   if (n === 0 || n === 1) {
     return 1;
@@ -9,7 +14,11 @@ function factorial(n: number): number {
 }
 
 function bezierCurve(points: Point[], resolution: number): Point[] {
-  let t = Array.from({ length: resolution }, (_, i) => i / (resolution - 1));
+  const t: number[] = Array.from(
+    { length: resolution },
+    (_, i) => i / (resolution - 1)
+  );
+
   let curvePoints: Point[] = [];
 
   t.forEach(ti => {
