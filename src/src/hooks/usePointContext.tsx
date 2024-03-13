@@ -5,7 +5,7 @@ import React, {
   Dispatch,
   SetStateAction,
 } from "react";
-import { Point } from "@/utils/point";
+import { Point } from "@/utils/data-structure";
 
 interface PointContextType {
   threePoint: Point[];

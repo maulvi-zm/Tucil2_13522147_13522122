@@ -1,4 +1,4 @@
-import { Point } from "@/utils/point";
+import { BezierResult, Point } from "@/utils/data-structure";
 
 function bezierCurves(points: Point[], t: number): Point {
   if (points.length === 1) {
@@ -19,7 +19,14 @@ function bezierCurves(points: Point[], t: number): Point {
   return bezierCurves(newPoints, t);
 }
 
-export function bezierCurveAll(points: Point[], resolution: number): Point[][] {
+export function bezierCurveAllDNC(
+  points: Point[],
+  resolution: number
+): BezierResult {
+  let startTime = performance.now();
+
+  let result: BezierResult = { matrix: [[]], time: 0 };
+
   let curvePointsAll: Point[][] = [];
 
   for (let i = 0; i < resolution; i++) {
@@ -33,5 +40,11 @@ export function bezierCurveAll(points: Point[], resolution: number): Point[][] {
     curvePointsAll.push(curvePoints);
   }
 
-  return curvePointsAll;
+  result.matrix = curvePointsAll;
+
+  let endTime = performance.now();
+
+  result.time = endTime - startTime;
+
+  return result;
 }

@@ -29,9 +29,10 @@ function BezierCurve() {
     const bezierPoints = resultPoint[showedIteration - 1];
 
     const data = {
+      labels: ["Bezier Curve"],
       datasets: [
         {
-          labels: "Bezier Curve",
+          label: "Bezier Curve",
           data: bezierPoints.map((point) => ({ x: point.x, y: point.y })),
           borderColor: "rgba(255, 99, 132, 1)",
           backgroundColor: "rgba(255, 99, 132, 1)",
