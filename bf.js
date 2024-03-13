@@ -42,3 +42,5 @@ let res = 5;
 let points = [[x0, y0], [x1, y1], [x2, y2]];
 
 let curvePointsAll = bezierCurveAll(points, res);
+
+console.log(curvePointsAll)
