@@ -53,6 +53,18 @@ export function bezierCurveAllBF(
     curvePointsAll.push(bezierCurve(points, i * 2 + 1));
   }
 
+  for (let i = 1; i < resolution; i++) {
+    for (let j = 1; j < curvePointsAll[i-1].length-1; j++) {
+      if (!curvePointsAll[i].includes(curvePointsAll[i-1][j])) {
+        for (let k = 1; k < curvePointsAll[i].length-1; k++) {
+          if (Math.abs(curvePointsAll[i-1][j].x) > Math.abs(curvePointsAll[i][k].x) && Math.abs(curvePointsAll[i-1][j].x) < Math.abs(curvePointsAll[i][k+1].x)) {
+            curvePointsAll[i].splice(k+1, 0, curvePointsAll[i-1][j]);
+          }
+        }
+      }
+    }
+  }
+
   result.matrix = curvePointsAll;
 
   let endTime = performance.now();
