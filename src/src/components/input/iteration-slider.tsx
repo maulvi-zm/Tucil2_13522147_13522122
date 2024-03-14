@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Slider } from "./ui/slider";
+import { Slider } from "../ui/slider";
 import { usePointContext } from "@/hooks/usePointContext";
 
 function IterationSlider() {
@@ -13,11 +13,11 @@ function IterationSlider() {
   }, [showedIteration, resultPoint]);
 
   return (
-    resultPoint.length > 1 && (
+    resultPoint.matrix.length > 1 && (
       <div className='mt-2'>
         <Slider
           defaultValue={sliderValue}
-          max={resultPoint.length}
+          max={resultPoint.matrix.length}
           step={1}
           onValueChange={(value) => {
             setShowedIteration(value[0]);

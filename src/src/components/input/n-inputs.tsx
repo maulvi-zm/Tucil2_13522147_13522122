@@ -1,5 +1,5 @@
-import { Input } from "./ui/input";
-import { Label } from "./ui/label";
+import { Input } from "../ui/input";
+import { Label } from "../ui/label";
 import { usePointContext } from "@/hooks/usePointContext";
 import { NPointSelector } from "./npoint-selector";
 

@@ -1,5 +1,5 @@
-import { Input } from "./ui/input";
-import { Label } from "./ui/label";
+import { Input } from "../ui/input";
+import { Label } from "../ui/label";
 import { usePointContext } from "@/hooks/usePointContext";
 
 function ThreeInput() {
@@ -105,6 +105,7 @@ function ThreeInput() {
         <Input
           id='iteration'
           type='number'
+          defaultValue={0}
           onChange={(e) => {
             setIteration(parseInt(e.target.value ? e.target.value : "0"));
             console.log(e.target.value);

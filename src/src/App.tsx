@@ -1,14 +1,13 @@
-import BezierCurve from "./components/bezier-canvas";
+import BezierCurve from "./components/output/bezier-canvas";
 import Header from "./components/header";
-import { InputTabs } from "./components/input-tabs";
+import { InputTabs } from "./components/input/input-tabs";
 import { useWindowSize } from "./hooks/useWindowSize";
 import { PointProvider } from "./hooks/usePointContext";
-import IterationSlider from "./components/iteration-slider";
+import IterationSlider from "./components/input/iteration-slider";
+import ProcessingTime from "./components/output/process-time";
 
 function App() {
   const windowSize = useWindowSize();
-
-  console.log(windowSize);
 
   return (
     <>
@@ -23,6 +22,7 @@ function App() {
 
           <div className='self-center'>
             <InputTabs />
+            <ProcessingTime />
           </div>
         </div>
       </PointProvider>

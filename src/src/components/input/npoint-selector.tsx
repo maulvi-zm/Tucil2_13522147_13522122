@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/select";
 import { usePointContext } from "@/hooks/usePointContext";
 import { Input } from "@/components/ui/input";
-import { Label } from "./ui/label";
+import { Label } from "../ui/label";
 
 export function NPointSelector() {
   const { nPoint, setNPointAtIndex } = usePointContext();

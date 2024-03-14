@@ -16,7 +16,7 @@ function BezierCurve() {
   useEffect(() => {
     if (
       !chartRef.current ||
-      !resultPoint.length ||
+      !resultPoint.matrix.length ||
       !iteration ||
       !showedIteration
     ) {
@@ -26,7 +26,7 @@ function BezierCurve() {
     chartRef.current.width = screenWidth;
     chartRef.current.height = screenHeight;
 
-    const bezierPoints = resultPoint[showedIteration - 1];
+    const bezierPoints = resultPoint.matrix[showedIteration - 1];
 
     const data = {
       labels: ["Bezier Curve"],

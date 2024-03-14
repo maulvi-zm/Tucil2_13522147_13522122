@@ -5,15 +5,15 @@ import React, {
   Dispatch,
   SetStateAction,
 } from "react";
-import { Point } from "@/utils/data-structure";
+import { BezierResult, Point } from "@/utils/data-structure";
 
 interface PointContextType {
   threePoint: Point[];
   setThreePointAtIndex: (index: number, point: Point) => void;
   nPoint: Point[];
   setNPointAtIndex: (index: number, point: Point) => void;
-  resultPoint: Point[][];
-  setResultPoint: Dispatch<SetStateAction<Point[][]>>;
+  resultPoint: BezierResult;
+  setResultPoint: Dispatch<SetStateAction<BezierResult>>;
   iteration: number;
   setIteration: Dispatch<SetStateAction<number>>;
   showedIteration: number;
@@ -28,7 +28,7 @@ const PointContext = createContext<PointContextType>({
   nPoint: [],
   setNPointAtIndex: () => {},
   setNPoint: () => {},
-  resultPoint: [[]],
+  resultPoint: { matrix: [[]], time: 0 },
   setResultPoint: () => {},
   iteration: 0,
   setIteration: () => {},
@@ -50,7 +50,10 @@ export const PointProvider = ({ children }: { children: React.ReactNode }) => {
   // State for n points
   const [nPoint, setNPoint] = useState<Point[]>([]);
   // State for result points
-  const [resultPoint, setResultPoint] = useState<Point[][]>([[{ x: 0, y: 0 }]]);
+  const [resultPoint, setResultPoint] = useState<BezierResult>({
+    matrix: [[]],
+    time: -1,
+  });
   // State for iteration
   const [iteration, setIteration] = useState<number>(0);
   // State for showed iteration
