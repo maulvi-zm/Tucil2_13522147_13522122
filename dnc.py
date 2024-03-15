@@ -1,69 +1,64 @@
 import matplotlib.pyplot as plt
 import numpy as np
+import time
 
-def bezier_curve(points, t):
-    if len(points) == 1:
-        return points[0]
+def ngeplot2(points):
+    x = [point[0] for point in points]
+    y = [point[1] for point in points]
+
+    plt.scatter(x, y)
+
+    plt.show()
+
+def ngeplot(arr):
+    x = [point[0] for point in arr]
+    y = [point[1] for point in arr]
     
-    new_points = []
-    for i in range(len(points)-1):
-        mid_point = (1 - t) * points[i] + t * points[i + 1]
-        new_points.append(mid_point)
+    plt.figure()
+    plt.plot(x, y)
+    plt.xlabel('X')
+    plt.ylabel('Y')
+    plt.title('Plot Garis dari Array Titik')
+    plt.grid(True)
+    plt.show()
+
+def bezier_curve(controlPoints, t):
+    result = [controlPoints[0], controlPoints[len(controlPoints)-1]]
+    bezier_curve_recursion(controlPoints, t, result)
+
+    return result
+
+def bezier_curve_recursion(controlPoints, t, result):
+    if t == 0:
+        return []
     
-    return bezier_curve(new_points, t)
-    
-# x0, y0 = map(int, input("Masukkan pasangan titik pertama: ").split())
-# x1, y1 = map(int, input("Masukkan pasangan titik kedua: ").split())
-# x2, y2 = map(int, input("Masukkan pasangan titik ketiga: ").split())
-# res = int(input("Masukkan jumlah iterasi: "))
+    newLine = []
+    for j in range(0, len(controlPoints)-2):
+        for i in range(j, j+2):
+            temp = [0,0]
+            temp[0] = (controlPoints[i+1][0] - controlPoints[i][0])/2
+            temp[1] = (controlPoints[i+1][1] - controlPoints[i][1])/2
 
-x0 = 1
-y0 = 1
-x1 = 4
-y1 = 10
-x2 = 7
-y2 = 1
-res = 5
+            newLine.append([temp[0] + controlPoints[i][0], temp[1] + controlPoints[i][1]])
 
-points = np.array([[x0, y0], [x1, y1], [x2, y2]])
-curve_points = []
-for i in range (res):
-    t = np.linspace(0, 1, i * 2 + 1)
-    curve_points.append(np.array([bezier_curve(points, ti) for ti in t]))
+        result.append([newLine[0][0] + (newLine[1][0] - newLine[0][0])/2, newLine[0][1] + (newLine[1][1] - newLine[0][1])/2])
 
-#   for (let i = 1; i < resolution; i++) {
-#     for (let j = 1; j < curvePointsAll[i-1].length-1; j++) {
-#       if (!curvePointsAll[i].includes(curvePointsAll[i-1][j])) {
-#           for (let k = 1; k < curvePointsAll[i].length-1; k++) {
-#             if (curvePointsAll[i-1][j].x > curvePointsAll[i][k].x && curvePointsAll[i-1][j].x < curvePointsAll[i][k+1].x) {
-#             curvePointsAll[i].splice(k+1, 0, curvePointsAll[i-1][j]);
-#           }
-#         }
-#       }
-#     }
-#   }
-    
-# for i in range (1, res):
-#     for j in range (1, len(curve_points[i-1])-1):
-#         if (curve_points[i-1][j] not in curve_points[i]):
-#             for k in range (1, len(curve_points[i])-1):
-#                 if (curve_points[i-1][j][0] > curve_points[i][k][0]):
-#                     if (curve_points[i-1][j][0] < curve_points[i][k+1][0]):
-#                         curve_points[i] = np.insert(curve_points[i], k+1, curve_points[i-1][j])
-    
-for i in range (1, res):
-    for j in range (1, len(curve_points[i-1])-1):
-        if (curve_points[i-1][j] not in curve_points[i]):
-            curve_points[i] = np.insert(curve_points[i], j+1, curve_points[i-1][j])
-            print("yg dimasukin ",curve_points[i-1][j])
-            print("dari ", curve_points[i-1])
-            print("di iterasi ke ", i)
+        bezier_curve_recursion([controlPoints[j], newLine[0], [newLine[0][0] + (newLine[1][0] - newLine[0][0])/2, newLine[0][1] + (newLine[1][1] - newLine[0][1])/2]], t-1, result)
+        bezier_curve_recursion([[newLine[0][0] + (newLine[1][0] - newLine[0][0])/2, newLine[0][1] + (newLine[1][1] - newLine[0][1])/2], newLine[1], controlPoints[j+2]], t-1, result)
 
+def bubble_sort(point):
+    n = len(point)
+    for i in range(n-1):
+        for j in range(n-i-1):
+            if point[j][0] > point[j+1][0]:
+                point[j], point[j+1] = point[j+1], point[j]
+    return point
 
-for i in range(len(curve_points)):
-    print("iterasi ke ", i)
-    print(curve_points[i])
-    print("length nya ", len(curve_points[i]))
-    # for j in range(len(curve_points[i])):
-    #     print("trololo")
-    #     print(curve_points[i][j][0])
+p = [[1,1], [4,10], [7,1]]
+# p = [[-2,-3], [-3,-2], [0,-2], [1,-3], [2,1]]
+duar = bezier_curve(p, 3)
+duar = bubble_sort(duar)
+
+print(duar)
+print(len(duar))
+# ngeplot(duar)

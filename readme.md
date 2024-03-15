@@ -1,2 +1,2 @@
-dnc = divide and conquer
+dnc = divide and conquer  
 bf = brute force
