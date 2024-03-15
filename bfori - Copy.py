@@ -19,8 +19,7 @@ y1 = 10
 x2 = 7
 y2 = 1
 
-points = np.array([[-2, -3], [-3, -2], [0, -2], [1, -3], [2, 1]])
-#points = np.array([[x0, y0], [x1, y1], [x2, y2]])
+points = np.array([[x0, y0], [x1, y1], [x2, y2]])
 
 res = int(input("Masukkan jumlah iterasi: "))
 

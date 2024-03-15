@@ -22,6 +22,9 @@ def plot_bezier_curve(points, resolution):
 
     print("Time needed: ", end - start)
 
+    #for i in range (len(curve_points)):
+    #    print(curve_points[i])
+
     plt.figure()
     plt.plot(curve_points[:,0], curve_points[:,1], label='Bézier Curve', color='blue')
     plt.scatter(points[:,0], points[:,1], label='Control Points', color='red')
@@ -29,8 +32,18 @@ def plot_bezier_curve(points, resolution):
     plt.gca().set_aspect('equal', adjustable='box')
     plt.show()
 
-# Define control points
-control_points = np.array([[-2, -3], [-3, -2], [0, -2], [1, -3], [2, 1]])
+# x0, y0 = map(int, input("Masukkan pasangan titik pertama: ").split())
+# x1, y1 = map(int, input("Masukkan pasangan titik kedua: ").split())
+# x2, y2 = map(int, input("Masukkan pasangan titik ketiga: ").split())
 
-# Plot the curve
-plot_bezier_curve(control_points, 100)
+x0 = 1
+y0 = 1
+x1 = 4
+y1 = 10
+x2 = 7
+y2 = 1
+
+res = int(input("Masukkan jumlah iterasi: "))
+
+plot_bezier_curve(np.array([[x0, y0], [x1, y1], [x2, y2]]), res*2 + 1)
+

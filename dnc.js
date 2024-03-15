@@ -20,24 +20,24 @@ function bezierCurveAll(points, resolution) {
         curvePointsAll.push(t.map(ti => bezierCurve(points, ti)));
     }
 
-  for (let i = 1; i < resolution; i++) {
-    for (let j = 1; j < curvePointsAll[i-1].length-1; j++) {
-      if (!curvePointsAll[i].includes(curvePointsAll[i-1][j])) {
-          for (let k = 1; k < curvePointsAll[i].length-1; k++) {
-            if (curvePointsAll[i-1][j].x > curvePointsAll[i][k].x && curvePointsAll[i-1][j].x < curvePointsAll[i][k+1].x) {
-            curvePointsAll[i].splice(k+1, 0, curvePointsAll[i-1][j]);
+    for (let i = 1; i < resolution; i++) {
+        for (let j = 1; j < curvePointsAll[i-1].length-1; j++) {
+          if (!curvePointsAll[i].includes(curvePointsAll[i-1][j])) {
+            for (let k = 1; k < curvePointsAll[i].length-1; k++) {
+              if (curvePointsAll[i-1][j].x > curvePointsAll[i][k].x && curvePointsAll[i-1][j].x < curvePointsAll[i][k+1].x) {
+                curvePointsAll[i].splice(k+1, 0, curvePointsAll[i-1][j]);
+              }
+            }
           }
         }
       }
-    }
-  }
 
     return curvePointsAll;
 }
 
 let x0 = 1;
 let y0 = 1;
-let x1 = 4;
+let x1 = -4;
 let y1 = 10;
 let x2 = 7;
 let y2 = 1;
