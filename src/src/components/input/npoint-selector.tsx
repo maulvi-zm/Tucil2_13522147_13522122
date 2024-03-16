@@ -81,8 +81,6 @@ export function NPointSelector() {
               x: parseFloat(e.target.value),
               y: nPoint[currentPoint].y,
             });
-
-            console.log("nPoint", nPoint);
           }}
         />
         <span>y : </span>
@@ -97,8 +95,6 @@ export function NPointSelector() {
               x: nPoint[currentPoint].x,
               y: parseFloat(e.target.value),
             });
-
-            console.log("nPoint", nPoint);
           }}
         />
       </div>

@@ -4,12 +4,18 @@ import { Switch } from "../ui/switch";
 import { usePointContext } from "@/hooks/usePointContext";
 import { Button } from "../ui/button";
 import { bezierCurveAllBF } from "@/utils/bf";
-import { bezierCurveAllDNC } from "@/utils/dnc";
+import { bezierCurves as DNC } from "@/utils/dnc";
 import { useToast } from "../ui/use-toast";
 
-function AlgoritmSwitch() {
-  const { setResultPoint, threePoint, iteration, setShowedIteration, nPoint } =
-    usePointContext();
+function AlgoritmSwitch({ swith_type }: { swith_type: string }) {
+  const {
+    setResultPoint,
+    threePoint,
+    iteration,
+    setShowedIteration,
+    nPoint,
+    setType,
+  } = usePointContext();
 
   const { toast } = useToast();
 
@@ -24,9 +30,11 @@ function AlgoritmSwitch() {
   };
 
   function isAllPointsUnique(points: { x: number; y: number }[]) {
+    console.log(points);
     for (let i = 0; i < points.length; i++) {
       for (let j = i + 1; j < points.length; j++) {
         if (points[i].x === points[j].x && points[i].y === points[j].y) {
+          console.log(points[i], points[j], i, j);
           return false;
         }
       }
@@ -35,6 +43,7 @@ function AlgoritmSwitch() {
   }
 
   const hadleSubmit = () => {
+    console.log(nPoint);
     if (iteration < 1) {
       toast({
         title: "Error!",
@@ -44,7 +53,7 @@ function AlgoritmSwitch() {
       return;
     }
 
-    if (!isAllPointsUnique(threePoint)) {
+    if (!isAllPointsUnique(threePoint) && swith_type === "three-point") {
       toast({
         title: "Error!",
         description: "Titik harus unik",
@@ -53,7 +62,7 @@ function AlgoritmSwitch() {
       return;
     }
 
-    if (!isAllPointsUnique(nPoint)) {
+    if (!isAllPointsUnique(nPoint) && swith_type === "n-point") {
       toast({
         title: "Error!",
         description: "Titik harus unik",
@@ -61,13 +70,23 @@ function AlgoritmSwitch() {
       });
     }
 
-    setResultPoint({ matrix: [[]], time: -1 });
     let result;
     if (algorithm === "brute-force") {
-      2;
-      result = bezierCurveAllBF(threePoint, iteration);
+      if (swith_type === "three-points") {
+        setType("three-point");
+        result = bezierCurveAllBF(threePoint, iteration);
+      } else {
+        setType("n-point");
+        result = bezierCurveAllBF(nPoint, iteration);
+      }
     } else {
-      result = bezierCurveAllDNC(threePoint, iteration);
+      if (swith_type === "three-points") {
+        setType("three-point");
+        result = DNC(threePoint, iteration);
+      } else {
+        setType("n-point");
+        result = DNC(nPoint, iteration);
+      }
     }
 
     setResultPoint(result);

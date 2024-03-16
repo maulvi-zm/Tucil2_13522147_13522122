@@ -19,6 +19,8 @@ interface PointContextType {
   showedIteration: number;
   setShowedIteration: Dispatch<SetStateAction<number>>;
   setNPoint: Dispatch<SetStateAction<Point[]>>;
+  type: "three-point" | "n-point";
+  setType: Dispatch<SetStateAction<"three-point" | "n-point">>;
 }
 
 // Create the context
@@ -34,6 +36,8 @@ const PointContext = createContext<PointContextType>({
   setIteration: () => {},
   showedIteration: 0,
   setShowedIteration: () => {},
+  type: "three-point",
+  setType: () => {},
 });
 
 // Custom hook to consume the context
@@ -58,6 +62,8 @@ export const PointProvider = ({ children }: { children: React.ReactNode }) => {
   const [iteration, setIteration] = useState<number>(0);
   // State for showed iteration
   const [showedIteration, setShowedIteration] = useState<number>(0);
+  // State for type of input
+  const [type, setType] = useState<"three-point" | "n-point">("three-point");
 
   // Function to set a point in the threePoint array at a specific index
   const setThreePointAtIndex = (index: number, point: Point) => {
@@ -96,6 +102,8 @@ export const PointProvider = ({ children }: { children: React.ReactNode }) => {
     showedIteration,
     setShowedIteration,
     setNPoint: setNPoint,
+    type,
+    setType,
   };
 
   return (

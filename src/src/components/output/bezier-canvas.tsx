@@ -9,7 +9,8 @@ function BezierCurve() {
     { x: number; y: number }[],
     string
   > | null>(null);
-  const { resultPoint, iteration, showedIteration } = usePointContext();
+  const { resultPoint, iteration, showedIteration, nPoint, type, threePoint } =
+    usePointContext();
   const screenWidth = window.innerWidth / 2 - 50;
   const screenHeight = screenWidth - 50;
 
@@ -40,6 +41,20 @@ function BezierCurve() {
           pointHoverRadius: 8,
           pointStyle: "circle",
           showLine: true,
+        },
+        {
+          label: type === "n-point" ? "N-Point" : "Three-Point",
+          data:
+            `${type}` === "n-point"
+              ? nPoint.map((point) => ({ x: point.x, y: point.y }))
+              : threePoint.map((point) => ({ x: point.x, y: point.y })),
+          borderColor: "rgba(54, 162, 235, 1)",
+          backgroundColor: "rgba(54, 162, 235, 1)",
+          pointRadius: 5,
+          pointHoverRadius: 8,
+          pointStyle: "circle",
+          showLine: true,
+          borderDash: [10, 10],
         },
       ],
     };

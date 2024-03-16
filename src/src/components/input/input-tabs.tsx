@@ -31,7 +31,7 @@ export function InputTabs() {
               <ThreeInput />
             </CardContent>
             <CardFooter className='flex justify-between items-center'>
-              <AlgoritmSwitch />
+              <AlgoritmSwitch swith_type='three-points' />
             </CardFooter>
           </Card>
         </TabsContent>
@@ -47,7 +47,7 @@ export function InputTabs() {
               <NInput />
             </CardContent>
             <CardFooter className='flex justify-between items-center'>
-              <AlgoritmSwitch />
+              <AlgoritmSwitch swith_type='n-points' />
             </CardFooter>
           </Card>
         </TabsContent>

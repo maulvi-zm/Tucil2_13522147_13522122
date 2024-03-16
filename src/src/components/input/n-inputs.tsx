@@ -4,7 +4,7 @@ import { usePointContext } from "@/hooks/usePointContext";
 import { NPointSelector } from "./npoint-selector";
 
 function NInput() {
-  const { setNPoint, nPoint, setIteration } = usePointContext();
+  const { setNPoint, setIteration } = usePointContext();
   return (
     <>
       <div className='space-y-1 mb-4'>
@@ -15,7 +15,6 @@ function NInput() {
           onChange={(e) => {
             const n = parseInt(e.target.value);
             setNPoint(new Array(n).fill({ x: 0, y: 0 }));
-            console.log("nPoint", nPoint);
           }}
         />
       </div>

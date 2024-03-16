@@ -1,62 +1,106 @@
-import { BezierResult, Point } from "@/utils/data-structure";
+import { BezierResult, Point } from "./data-structure";
 
-function bezierCurves(points: Point[], t: number): Point {
-  if (points.length === 1) {
-    return points[0];
-  }
-
-  let newPoints: Point[] = [];
-  for (let i = 0; i < points.length - 1; i++) {
-    let midPoint: Point = {
-      x: (1 - t) * points[i].x + t * points[i + 1].x,
-      y: (1 - t) * points[i].y + t * points[i + 1].y,
-    };
-
-    newPoints.push(midPoint);
-  }
-
-  // Recursive call
-  return bezierCurves(newPoints, t);
+function findMidPoint(p1: Point, p2: Point): Point {
+  return {
+    x: (p1.x + p2.x) / 2,
+    y: (p1.y + p2.y) / 2,
+  };
 }
 
-export function bezierCurveAllDNC(
+function makeCurve(
   points: Point[],
-  resolution: number
-): BezierResult {
-  let startTime = performance.now();
-
-  let result: BezierResult = { matrix: [[]], time: 0 };
-
-  let curvePointsAll: Point[][] = [];
-
-  for (let i = 0; i < resolution; i++) {
-    const t: number[] = Array.from(
-      { length: i * 2 + 1 },
-      (_, j) => j / (i * 2)
-    );
-
-    const curvePoints = t.map((ti) => bezierCurves(points, ti));
-
-    curvePointsAll.push(curvePoints);
+  controlPoints: Point[]
+): {
+  controlPoints: Point[];
+  points: Point[];
+} {
+  if (points.length !== controlPoints.length + 1) {
+    throw new Error("Invalid control points");
   }
 
-  for (let i = 1; i < resolution; i++) {
-    for (let j = 1; j < curvePointsAll[i-1].length-1; j++) {
-      if (!curvePointsAll[i].includes(curvePointsAll[i-1][j])) {
-        for (let k = 1; k < curvePointsAll[i].length-1; k++) {
-          if (Math.abs(curvePointsAll[i-1][j].x) > Math.abs(curvePointsAll[i][k].x) && Math.abs(curvePointsAll[i-1][j].x) < Math.abs(curvePointsAll[i][k+1].x)) {
-            curvePointsAll[i].splice(k+1, 0, curvePointsAll[i-1][j]);
-          }
-        }
+  let controlPointer: number = 0;
+  let resultPointer: number = 0;
+
+  let newControlPoints: Point[] = [];
+  let newPoints: Point[] = [];
+
+  while (resultPointer < points.length - 1) {
+    const point1 = points[resultPointer];
+    const point2 = points[resultPointer + 1];
+    const controlPoint = controlPoints[controlPointer];
+
+    const q0: Point = findMidPoint(point1, controlPoint);
+    const q1: Point = findMidPoint(controlPoint, point2);
+
+    const s1: Point = findMidPoint(q0, q1);
+
+    newControlPoints.push(q0);
+    newControlPoints.push(q1);
+
+    newPoints.push(point1);
+    newPoints.push(s1);
+
+    resultPointer += 1;
+    controlPointer += 1;
+  }
+
+  newPoints.push(points[points.length - 1]);
+
+  return {
+    controlPoints: newControlPoints,
+    points: newPoints,
+  };
+}
+
+export function bezierCurves(points: Point[], iteration: number): BezierResult {
+  if (points.length === 1) {
+    return { matrix: [points], time: 0 };
+  }
+
+  let controlPoints: Point[] = [];
+  let mainPoints: Point[] = [];
+  let result: Point[][] = [];
+
+  let timeStart = performance.now();
+
+  if (points.length % 2 == 1) {
+    for (let i = 0; i < points.length; i += 1) {
+      if (i % 2 == 0) {
+        mainPoints.push(points[i]);
+      } else {
+        controlPoints.push(points[i]);
       }
     }
+  } else {
+    for (let i = 0; i < points.length - 1; i += 1) {
+      let midPoint: Point = findMidPoint(points[i], points[i + 1]);
+      controlPoints.push(midPoint);
+    }
+
+    mainPoints.push(points[0]);
+
+    for (let i = 0; i < controlPoints.length - 1; i += 1) {
+      let midPoint: Point = findMidPoint(
+        controlPoints[i],
+        controlPoints[i + 1]
+      );
+      mainPoints.push(midPoint);
+    }
+
+    mainPoints.push(points[points.length - 1]);
+
+    result.push(mainPoints);
+    iteration -= 1;
   }
 
-  result.matrix = curvePointsAll;
+  for (let i = 0; i < iteration; i++) {
+    const newCurve = makeCurve(mainPoints, controlPoints);
+    controlPoints = newCurve.controlPoints;
+    mainPoints = newCurve.points;
+    result.push(mainPoints);
+  }
 
-  let endTime = performance.now();
+  let timeEnd = performance.now();
 
-  result.time = endTime - startTime;
-
-  return result;
+  return { matrix: result, time: timeEnd - timeStart };
 }
