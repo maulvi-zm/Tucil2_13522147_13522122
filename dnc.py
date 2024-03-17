@@ -32,16 +32,20 @@ def bezier_curve_recursion(controlPoints, t, result):
     if t == 0:
         return []
     
-    newLine = []
+    # print("sekarang t nya tuh ", t)
+    # print("control point nya adalah ", controlPoints)
     for j in range(0, len(controlPoints)-2):
+        newLine = []
         for i in range(j, j+2):
             temp = [0,0]
             temp[0] = (controlPoints[i+1][0] - controlPoints[i][0])/2
             temp[1] = (controlPoints[i+1][1] - controlPoints[i][1])/2
 
             newLine.append([temp[0] + controlPoints[i][0], temp[1] + controlPoints[i][1]])
+            # print("newline nya adalah ", newLine)
 
         result.append([newLine[0][0] + (newLine[1][0] - newLine[0][0])/2, newLine[0][1] + (newLine[1][1] - newLine[0][1])/2])
+        # print("YANG DI APPEND ADALAH  ", [newLine[0][0] + (newLine[1][0] - newLine[0][0])/2, newLine[0][1] + (newLine[1][1] - newLine[0][1])/2])
 
         bezier_curve_recursion([controlPoints[j], newLine[0], [newLine[0][0] + (newLine[1][0] - newLine[0][0])/2, newLine[0][1] + (newLine[1][1] - newLine[0][1])/2]], t-1, result)
         bezier_curve_recursion([[newLine[0][0] + (newLine[1][0] - newLine[0][0])/2, newLine[0][1] + (newLine[1][1] - newLine[0][1])/2], newLine[1], controlPoints[j+2]], t-1, result)
@@ -56,9 +60,15 @@ def bubble_sort(point):
 
 p = [[1,1], [4,10], [7,1]]
 # p = [[-2,-3], [-3,-2], [0,-2], [1,-3], [2,1]]
-duar = bezier_curve(p, 3)
-duar = bubble_sort(duar)
+# p = [[-2,-3], [-3,-2], [0,-4], [1,-5]]
+# p = [[-1,-2], [0,0], [1,3], [6,-1]]
+#duar = bezier_curve(p, 10)
+#duar = bubble_sort(duar)
 
-print(duar)
-print(len(duar))
-# ngeplot(duar)
+#print(duar)
+#print(len(duar))
+#ngeplot(duar)
+
+for i in range (10):
+    temp = bezier_curve(p,i)
+    print("pas iterasi ke ", i, " length nya ", len(temp))

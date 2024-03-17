@@ -1,4 +1,4 @@
-function bezierCurve(controlPoints: number[][], t: number): number[][] {
+function bezierCurveDNC(controlPoints: number[][], t: number): number[][] {
     const result: number[][] = [controlPoints[0], controlPoints[controlPoints.length - 1]];
     bezierCurveRecursion(controlPoints, t, result);
     return result;
@@ -48,10 +48,3 @@ function bubbleSort(point: number[][]): number[][] {
     }
     return point;
 }
-
-const p: number[][] = [[1, 1], [4, 10], [7, 1]];
-let duar: number[][] = bezierCurve(p, 3);
-duar = bubbleSort(duar);
-
-console.log(duar);
-console.log(duar.length);
