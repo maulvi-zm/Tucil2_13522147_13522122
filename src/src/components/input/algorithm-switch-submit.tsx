@@ -4,7 +4,7 @@ import { Switch } from "../ui/switch";
 import { usePointContext } from "@/hooks/usePointContext";
 import { Button } from "../ui/button";
 import { bezierCurveAllBF } from "@/utils/bf";
-import { bezierCurves as DNC } from "@/utils/dnc";
+import { makeMatrixAnimation as DNC } from "@/utils/dnc";
 import { useToast } from "../ui/use-toast";
 
 function AlgoritmSwitch({ swith_type }: { swith_type: string }) {
