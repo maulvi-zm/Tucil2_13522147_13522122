@@ -22,6 +22,7 @@ export function NPointSelector() {
   React.useEffect(() => {
     if (currentPoint >= nPoint.length) {
       setCurrentPoint(0); // Reset currentPoint if it's out of bounds
+      return;
     }
 
     if (nPoint.length <= 0) {
@@ -34,7 +35,7 @@ export function NPointSelector() {
     }
   }, [nPoint.length, currentPoint]);
 
-  if (nPoint.length <= 0) {
+  if (nPoint.length <= 0 || currentPoint >= nPoint.length) {
     return null;
   }
 

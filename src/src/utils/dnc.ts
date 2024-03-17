@@ -79,18 +79,7 @@ function handleEvenPoints(points: Point[]): Point[] {
   // Push the last point to the main points
   mainPoints.push(points[points.length - 1]);
 
-  let result: Point[] = [];
-
-  // Combine the main points and control points
-  for (let i = 0; i < controlPoints.length; i += 1) {
-    result.push(mainPoints[i]);
-    result.push(controlPoints[i]);
-  }
-
-  // Push the last main point
-  result.push(mainPoints[mainPoints.length - 1]);
-
-  return result;
+  return mainPoints;
 }
 
 /**
@@ -115,20 +104,22 @@ export function bezierCurves(points: Point[], iterations: number): Point[] {
 
   // If the number of points is even, then handle it first
   if (points.length % 2 === 0) {
-    points = handleEvenPoints(points);
+    result = handleEvenPoints(points);
     iterations -= 1;
   }
 
   // Divide and conquer
-  for (let i = 0; i <= points.length - 2; i += 2) {
-    const mainPoints = [points[i], points[i + 2]];
-    const control = points[i + 1];
-    const curve = DivideAndConquer(mainPoints, control, iterations);
+  if (iterations > 0) {
+    for (let i = 0; i <= points.length - 2; i += 2) {
+      const mainPoints = [points[i], points[i + 2]];
+      const control = points[i + 1];
+      const curve = DivideAndConquer(mainPoints, control, iterations);
 
-    if (result.length > 0 && result[result.length - 1] === mainPoints[0]) {
-      result = result.concat(curve.slice(1));
-    } else {
-      result = result.concat(curve);
+      if (result.length > 0 && result[result.length - 1] === mainPoints[0]) {
+        result = result.concat(curve.slice(1));
+      } else {
+        result = result.concat(curve);
+      }
     }
   }
 

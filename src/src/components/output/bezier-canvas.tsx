@@ -57,6 +57,7 @@ function BezierCurve() {
     if (chartData.current) {
       chartData.current.data = data;
       chartData.current.update();
+      chartData.current.render();
     } else {
       chartData.current = new Chart(chartRef.current, {
         type: "scatter",

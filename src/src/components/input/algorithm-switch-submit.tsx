@@ -19,7 +19,9 @@ function AlgoritmSwitch({ swith_type }: { swith_type: string }) {
 
   const { toast } = useToast();
 
-  const [algorithm, setAlgorithm] = useState("brute-force");
+  const [algorithm, setAlgorithm] = useState(
+    swith_type === "three-points" ? "brute-force" : "divide-and-conquer"
+  );
 
   const handleSwitch = () => {
     if (algorithm === "brute-force") {
@@ -27,6 +29,7 @@ function AlgoritmSwitch({ swith_type }: { swith_type: string }) {
     } else {
       setAlgorithm("brute-force");
     }
+    console.log("algorithm", algorithm);
   };
 
   function isAllPointsUnique(points: Point[]) {
@@ -78,24 +81,16 @@ function AlgoritmSwitch({ swith_type }: { swith_type: string }) {
     }
 
     let result;
-    if (algorithm === "brute-force") {
-      if (swith_type === "three-points") {
-        setType("three-point");
-        result = makeMatrixAnimation(threePoint, iteration, algorithm);
-      } else {
-        setType("n-point");
-        result = makeMatrixAnimation(nPoint, iteration, algorithm);
-      }
+
+    if (swith_type === "three-points") {
+      setType("three-point");
+      result = makeMatrixAnimation(threePoint, iteration, algorithm);
     } else {
-      if (swith_type === "three-points") {
-        setType("three-point");
-        result = makeMatrixAnimation(threePoint, iteration, algorithm);
-      } else {
-        setType("n-point");
-        result = makeMatrixAnimation(nPoint, iteration, algorithm);
-      }
+      setType("n-point");
+      result = makeMatrixAnimation(nPoint, iteration, algorithm);
     }
 
+    console.log("result", result);
     setResultPoint(result);
     setShowedIteration(1);
 
@@ -110,7 +105,11 @@ function AlgoritmSwitch({ swith_type }: { swith_type: string }) {
       <Button onClick={hadleSubmit}>Submit</Button>
       <div className='flex items-center space-x-2'>
         <Label htmlFor='brute-force'>BF</Label>
-        <Switch onCheckedChange={handleSwitch} />
+        {swith_type === "three-points" ? (
+          <Switch id='brute-force' onCheckedChange={handleSwitch} />
+        ) : (
+          <Switch id='brute-force' checked={true} disabled />
+        )}
         <Label htmlFor='divide-and-conquer'>DNC</Label>
       </div>
     </>
