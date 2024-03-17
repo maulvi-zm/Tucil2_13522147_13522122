@@ -12,6 +12,7 @@ function NInput() {
         <Input
           id='current'
           type='number'
+          min={3}
           onChange={(e) => {
             const n = parseInt(e.target.value);
             setNPoint(new Array(n).fill({ x: 0, y: 0 }));
@@ -25,6 +26,8 @@ function NInput() {
         <Input
           id='iteration'
           type='number'
+          min={1}
+          defaultValue={1}
           onChange={(e) => {
             setIteration(parseInt(e.target.value ? e.target.value : "0"));
             console.log(e.target.value);

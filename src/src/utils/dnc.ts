@@ -1,4 +1,4 @@
-import { BezierResult, Point } from "./data-structure";
+import { Point } from "./data-structure";
 
 /**
  * Finds the midpoint between two points.
@@ -100,7 +100,7 @@ function handleEvenPoints(points: Point[]): Point[] {
  * @returns An array of points representing the points on the bezier curve.
  * @throws Error if the points length is less than 3 or if the iterations is less than 1.
  */
-function bezierCurves(points: Point[], iterations: number): Point[] {
+export function bezierCurves(points: Point[], iterations: number): Point[] {
   // If there's < 3 points, return it immediately
   if (points.length < 3) {
     throw new Error("Invalid points length");
@@ -133,40 +133,4 @@ function bezierCurves(points: Point[], iterations: number): Point[] {
   }
 
   return result;
-}
-
-/**
- * Generates a matrix animation using Bezier curves.
- * @param points - An array of points representing the control points of the Bezier curves.
- * @param iteration - The number of iterations to perform for the Bezier curves.
- * @returns The generated matrix animation as a BezierResult object.
- */
-export function makeMatrixAnimation(
-  points: Point[],
-  iteration: number
-): BezierResult {
-  let num_of_point = points.length;
-  let BezierMatrix: BezierResult = { matrix: [], time: -1 };
-
-  let timeStart = performance.now();
-  let result = bezierCurves(points, iteration);
-  let timeEnd = performance.now();
-
-  BezierMatrix.time = timeEnd - timeStart;
-
-  let simpangan = (result.length - num_of_point) / (num_of_point - 1) + 1;
-  let temp: Point[] = [];
-
-  while (num_of_point <= result.length) {
-    for (let i = 0; i < result.length; i += simpangan) {
-      temp.push(result[i]);
-    }
-    BezierMatrix.matrix.push(temp);
-
-    temp = [];
-    num_of_point = 2 * num_of_point - 1;
-    simpangan = (result.length - num_of_point) / (num_of_point - 1) + 1;
-  }
-
-  return BezierMatrix;
 }

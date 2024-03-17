@@ -105,7 +105,8 @@ function ThreeInput() {
         <Input
           id='iteration'
           type='number'
-          defaultValue={0}
+          min={1}
+          defaultValue={1}
           onChange={(e) => {
             setIteration(parseInt(e.target.value ? e.target.value : "0"));
             console.log(e.target.value);

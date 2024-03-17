@@ -59,7 +59,7 @@ export const PointProvider = ({ children }: { children: React.ReactNode }) => {
     time: -1,
   });
   // State for iteration
-  const [iteration, setIteration] = useState<number>(0);
+  const [iteration, setIteration] = useState<number>(1);
   // State for showed iteration
   const [showedIteration, setShowedIteration] = useState<number>(0);
   // State for type of input

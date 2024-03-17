@@ -3,9 +3,9 @@ import { Label } from "../ui/label";
 import { Switch } from "../ui/switch";
 import { usePointContext } from "@/hooks/usePointContext";
 import { Button } from "../ui/button";
-import { bezierCurveAllBF } from "@/utils/bf";
-import { makeMatrixAnimation as DNC } from "@/utils/dnc";
+import { makeMatrixAnimation } from "@/utils/makeMatrixAnimation";
 import { useToast } from "../ui/use-toast";
+import { Point } from "@/utils/data-structure";
 
 function AlgoritmSwitch({ swith_type }: { swith_type: string }) {
   const {
@@ -29,12 +29,10 @@ function AlgoritmSwitch({ swith_type }: { swith_type: string }) {
     }
   };
 
-  function isAllPointsUnique(points: { x: number; y: number }[]) {
-    console.log(points);
+  function isAllPointsUnique(points: Point[]) {
     for (let i = 0; i < points.length; i++) {
       for (let j = i + 1; j < points.length; j++) {
         if (points[i].x === points[j].x && points[i].y === points[j].y) {
-          console.log(points[i], points[j], i, j);
           return false;
         }
       }
@@ -43,7 +41,6 @@ function AlgoritmSwitch({ swith_type }: { swith_type: string }) {
   }
 
   const hadleSubmit = () => {
-    console.log(nPoint);
     if (iteration < 1) {
       toast({
         title: "Error!",
@@ -53,7 +50,16 @@ function AlgoritmSwitch({ swith_type }: { swith_type: string }) {
       return;
     }
 
-    if (!isAllPointsUnique(threePoint) && swith_type === "three-point") {
+    if (nPoint.length < 3 && swith_type === "n-points") {
+      toast({
+        title: "Error!",
+        description: "Titik tidak boleh kurang dari 3",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    if (!isAllPointsUnique(threePoint) && swith_type === "three-points") {
       toast({
         title: "Error!",
         description: "Titik harus unik",
@@ -62,40 +68,40 @@ function AlgoritmSwitch({ swith_type }: { swith_type: string }) {
       return;
     }
 
-    if (!isAllPointsUnique(nPoint) && swith_type === "n-point") {
+    if (!isAllPointsUnique(nPoint) && swith_type === "n-points") {
       toast({
         title: "Error!",
         description: "Titik harus unik",
         variant: "destructive",
       });
+      return;
     }
 
     let result;
     if (algorithm === "brute-force") {
       if (swith_type === "three-points") {
         setType("three-point");
-        result = bezierCurveAllBF(threePoint, iteration);
+        result = makeMatrixAnimation(threePoint, iteration, algorithm);
       } else {
         setType("n-point");
-        result = bezierCurveAllBF(nPoint, iteration);
+        result = makeMatrixAnimation(nPoint, iteration, algorithm);
       }
     } else {
       if (swith_type === "three-points") {
         setType("three-point");
-        result = DNC(threePoint, iteration);
+        result = makeMatrixAnimation(threePoint, iteration, algorithm);
       } else {
         setType("n-point");
-        result = DNC(nPoint, iteration);
+        result = makeMatrixAnimation(nPoint, iteration, algorithm);
       }
     }
 
     setResultPoint(result);
-    setShowedIteration(0);
+    setShowedIteration(1);
 
     toast({
       title: "Success!",
-      description:
-        "Berhasil membuat bezier curve, gunakan slider untuk melihat hasil",
+      description: `Berhasil membuat bezier curve menggunakan algoritma ${algorithm}, gunakan slider untuk melihat hasil`,
     });
   };
 

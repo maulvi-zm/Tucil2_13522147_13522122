@@ -9,18 +9,13 @@ function BezierCurve() {
     { x: number; y: number }[],
     string
   > | null>(null);
-  const { resultPoint, iteration, showedIteration, nPoint, type, threePoint } =
+  const { resultPoint, showedIteration, nPoint, type, threePoint } =
     usePointContext();
   const screenWidth = window.innerWidth / 2 - 50;
   const screenHeight = screenWidth - 50;
 
   useEffect(() => {
-    if (
-      !chartRef.current ||
-      !resultPoint.matrix.length ||
-      !iteration ||
-      !showedIteration
-    ) {
+    if (!chartRef.current || !resultPoint.matrix.length || !showedIteration) {
       return;
     }
 
