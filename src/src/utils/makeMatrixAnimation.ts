@@ -12,7 +12,7 @@ export function makeMatrixAnimation(
   iteration: number,
   type: string
 ): BezierResult {
-  let num_of_point = points.length;
+  let num_of_point = 3;
   let BezierMatrix: BezierResult = { matrix: [], time: -1 };
 
   let timeStart = performance.now();
