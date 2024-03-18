@@ -19,10 +19,10 @@ Kurva Bezier adalah salah satu jenis kurva matematis yang digunakan dalam bidang
 
 ## Contributor
 
-| Name                       | NIM      |
-| -------------------------- | -------- |
+| Name                    | NIM      |
+| ----------------------- | -------- |
 | Maulvi Ziadinda Maulana | 13522122 |
-| Ikhwan Al Hakim            | 13522147 |
+| Ikhwan Al Hakim         | 13522147 |
 
 ## Structure
 
@@ -101,7 +101,7 @@ Node Package Manager
 
 ## How to Use
 
-1. Clone repository ini 
+1. Clone repository ini
    ```
    git clone https://github.com/Nerggg/Tucil2_13522147_13522122
    ```
@@ -113,4 +113,8 @@ Node Package Manager
 3. Jalankan program
    ```
    npm run dev
+   ```
+4. Atau kunjungi
+   ```
+   https://maulvi-zm.github.io/Tucil2_13522147_13522122
    ```
