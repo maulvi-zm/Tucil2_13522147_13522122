@@ -1,9 +1,16 @@
 import { Point } from "./data-structure";
 
+/**
+ * Calculates the points on a bezier curve given the control points.
+ * @param points - An array of control points.
+ * @param iteration - The number of iterations to perform.
+ * @returns An array of points on the bezier curve.
+ */
 export function bezierCurves(points: Point[], iteration: number): Point[] {
   let result: Point[] = [points[0], points[2]];
   let middle: Point[] = [];
 
+  // Loop through the control points and calculate the middle points.
   for (let i = 0; i < points.length - 1; i++) {
     let temp: Point = { x: 0, y: 0 };
     temp.x = 0.5 * points[i].x + 0.5 * points[i + 1].x;
@@ -11,6 +18,7 @@ export function bezierCurves(points: Point[], iteration: number): Point[] {
     middle.push(temp);
   }
 
+  // Loop through the iterations and calculate the points on the bezier curve.
   for (let i = 1; i < iteration; i++) {
     let resultTemp: Point[] = [];
     resultTemp.push(result[0]);

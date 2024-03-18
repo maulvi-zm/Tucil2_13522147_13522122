@@ -5,7 +5,10 @@ import path from "path";
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react()],
-  base: "/tucil1-stima/",
+  build: {
+    outDir: "../bin",
+  },
+  base: "/Tucil2_135221147_13522122/",
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
