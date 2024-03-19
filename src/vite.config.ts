@@ -8,7 +8,7 @@ export default defineConfig({
   build: {
     outDir: "../bin",
   },
-  base: "/Tucil2_135221147_13522122/",
+  base: "/Tucil2_13522147_13522122/",
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
